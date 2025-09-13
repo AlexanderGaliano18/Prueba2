@@ -49,4 +49,27 @@ elif opcion == "Velocidad Final (v)":
     a = st.number_input("Aceleración (a) en m/s²", value=0.0)
     t = st.number_input("Tiempo (t) en segundos", min_value=0.0, value=0.0)
 
-    if st.button("Calcular ve
+    if st.button("Calcular velocidad final"):
+        v = v0 + a * t
+        st.success(f"💨 Velocidad final: {round(v, 4)} m/s")
+
+        # Generar gráfica de velocidad vs tiempo
+        tiempo = np.linspace(0, t, 200)
+        velocidad = v0 + a * tiempo
+
+        fig, ax = plt.subplots()
+        ax.plot(tiempo, velocidad, label="v(t): Velocidad", color="#ff7f0e", linewidth=2)
+        ax.scatter(t, v, color="red", s=80, label=f"Velocidad final ({round(v,2)} m/s)")
+
+        ax.set_xlabel("Tiempo (s)")
+        ax.set_ylabel("Velocidad (m/s)")
+        ax.set_title("📊 Movimiento MRUA - Velocidad vs Tiempo")
+        ax.legend(loc="upper left")
+        ax.grid(True, linestyle="--", alpha=0.7)
+        st.pyplot(fig)
+
+        if a == 0:
+            st.info("ℹ️ La aceleración es cero: velocidad constante.")
+
+st.markdown("---")
+st.caption("Desarrollado con ❤️ usando Streamlit")
