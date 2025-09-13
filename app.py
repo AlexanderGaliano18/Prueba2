@@ -26,15 +26,18 @@ if opcion == "Posición Final (x)":
         st.success(f"📍 Posición final: {round(x, 4)} m")
 
         # Generar gráfica de posición vs tiempo
-        tiempo = np.linspace(0, t, 100)
+        tiempo = np.linspace(0, t, 200)
         posicion = x0 + v0 * tiempo + 0.5 * a * tiempo ** 2
 
         fig, ax = plt.subplots()
-        ax.plot(tiempo, posicion, label="x(t)", color="blue")
+        ax.plot(tiempo, posicion, label="x(t): Posición", color="#1f77b4", linewidth=2)
+        ax.scatter(t, x, color="red", s=80, label=f"Posición final ({round(x,2)} m)")
+        
         ax.set_xlabel("Tiempo (s)")
         ax.set_ylabel("Posición (m)")
-        ax.set_title("Movimiento MRUA - Posición vs Tiempo")
-        ax.legend()
+        ax.set_title("📊 Movimiento MRUA - Posición vs Tiempo")
+        ax.legend(loc="upper left")
+        ax.grid(True, linestyle="--", alpha=0.7)
         st.pyplot(fig)
 
         if a == 0:
@@ -46,24 +49,4 @@ elif opcion == "Velocidad Final (v)":
     a = st.number_input("Aceleración (a) en m/s²", value=0.0)
     t = st.number_input("Tiempo (t) en segundos", min_value=0.0, value=0.0)
 
-    if st.button("Calcular velocidad final"):
-        v = v0 + a * t
-        st.success(f"💨 Velocidad final: {round(v, 4)} m/s")
-
-        # Generar gráfica de velocidad vs tiempo
-        tiempo = np.linspace(0, t, 100)
-        velocidad = v0 + a * tiempo
-
-        fig, ax = plt.subplots()
-        ax.plot(tiempo, velocidad, label="v(t)", color="red")
-        ax.set_xlabel("Tiempo (s)")
-        ax.set_ylabel("Velocidad (m/s)")
-        ax.set_title("Movimiento MRUA - Velocidad vs Tiempo")
-        ax.legend()
-        st.pyplot(fig)
-
-        if a == 0:
-            st.info("ℹ️ La aceleración es cero: velocidad constante.")
-
-st.markdown("---")
-st.caption("Desarrollado con ❤️ usando Streamlit")
+    if st.button("Calcular ve
