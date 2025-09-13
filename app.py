@@ -1,4 +1,6 @@
 import streamlit as st
+import matplotlib.pyplot as plt
+import numpy as np
 
 st.set_page_config(page_title="Calculadora MRUA", page_icon="🧪")
 st.title("🧪 Calculadora de Movimiento Rectilíneo Uniformemente Acelerado (MRUA)")
@@ -8,8 +10,6 @@ Esta herramienta te permite calcular diferentes variables del Movimiento Rectil�
 
 - Posición final
 - Velocidad final
-- Tiempo
-- Aceleración
 """)
 
 opcion = st.selectbox("¿Qué variable deseas calcular?", ["Posición Final (x)", "Velocidad Final (v)"])
@@ -24,6 +24,19 @@ if opcion == "Posición Final (x)":
     if st.button("Calcular posición final"):
         x = x0 + v0 * t + 0.5 * a * t ** 2
         st.success(f"📍 Posición final: {round(x, 4)} m")
+
+        # Generar gráfica de posición vs tiempo
+        tiempo = np.linspace(0, t, 100)
+        posicion = x0 + v0 * tiempo + 0.5 * a * tiempo ** 2
+
+        fig, ax = plt.subplots()
+        ax.plot(tiempo, posicion, label="x(t)", color="blue")
+        ax.set_xlabel("Tiempo (s)")
+        ax.set_ylabel("Posición (m)")
+        ax.set_title("Movimiento MRUA - Posición vs Tiempo")
+        ax.legend()
+        st.pyplot(fig)
+
         if a == 0:
             st.info("ℹ️ No hay aceleración: el movimiento es uniforme.")
 
@@ -36,6 +49,19 @@ elif opcion == "Velocidad Final (v)":
     if st.button("Calcular velocidad final"):
         v = v0 + a * t
         st.success(f"💨 Velocidad final: {round(v, 4)} m/s")
+
+        # Generar gráfica de velocidad vs tiempo
+        tiempo = np.linspace(0, t, 100)
+        velocidad = v0 + a * tiempo
+
+        fig, ax = plt.subplots()
+        ax.plot(tiempo, velocidad, label="v(t)", color="red")
+        ax.set_xlabel("Tiempo (s)")
+        ax.set_ylabel("Velocidad (m/s)")
+        ax.set_title("Movimiento MRUA - Velocidad vs Tiempo")
+        ax.legend()
+        st.pyplot(fig)
+
         if a == 0:
             st.info("ℹ️ La aceleración es cero: velocidad constante.")
 
